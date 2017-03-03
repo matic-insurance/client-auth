@@ -8,12 +8,19 @@ Gem::Specification.new do |spec|
   spec.description   = 'Authentication for matic clients'
   spec.homepage      = 'https://github.com/matic-insurance/client-auth'
 
-  s.files = Dir['lib/**/*.rb']
-  s.files += Dir['README.markdown']
+  spec.files = Dir['lib/**/*.rb']
+  spec.files += Dir['README.markdown']
 
   spec.require_paths = 'lib'
 
-  s.add_dependency 'rest-client'
-  s.add_dependency 'activesupport'
-  s.add_dependency 'active_model_serializers', '0.10.2'
+  spec.add_dependency 'rest-client'
+  spec.add_dependency 'activesupport'
+
+  spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'rspec-its', '~> 1.2'
+  spec.add_development_dependency 'webmock'
+  spec.add_development_dependency 'rubocop', '~> 0.46'
+  spec.add_development_dependency 'rubocop-rspec', '~> 1.8'
 end

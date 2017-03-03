@@ -1,6 +1,8 @@
 require: rubocop-rspec
 
 AllCops:
+  Exclude:
+    - 'lib/client_auth.rb'
   TargetRubyVersion: 2.3
 
 Metrics/LineLength:
@@ -14,3 +16,6 @@ Style/SpaceInsideHashLiteralBraces:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+RSpec/VerifiedDoubles:
+  IgnoreSymbolicNames: true
