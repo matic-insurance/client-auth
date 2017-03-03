@@ -1,6 +1,11 @@
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'client_auth/version'
+
 Gem::Specification.new do |spec|
   spec.name          = 'client-auth'
-  spec.version       = '1.0.1'
+  spec.version       = ClientAuth::VERSION
   spec.authors       = ['Yuriy Lavryk']
   spec.email         = ['yuriy@getmatic.com']
 
