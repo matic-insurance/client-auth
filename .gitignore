@@ -1,0 +1,7 @@
+/.bundle/
+/spec/reports/
+/tmp/
+.ruby-version
+.ruby-gemset
+.idea/
+.rspec

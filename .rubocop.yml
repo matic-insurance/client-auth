@@ -1,0 +1,16 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.3
+
+Metrics/LineLength:
+  Max: 95
+
+Style/Documentation:
+  Enabled: false
+
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
