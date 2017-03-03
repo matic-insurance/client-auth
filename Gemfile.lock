@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    client-auth (1.0.0)
+    client-auth (1.0.1)
       activesupport
       rest-client
 
