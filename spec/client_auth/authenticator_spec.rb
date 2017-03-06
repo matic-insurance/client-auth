@@ -15,34 +15,34 @@ describe ClientAuth::Authenticator do
 
   let(:request) do
     double(:request, headers: headers,
-                     request_method: request_method,
-                     fullpath: fullpath,
-                     body: body)
+           request_method: request_method,
+           fullpath: fullpath,
+           body: body)
   end
 
   let(:headers) do
     {
-      'X-Client' => client_name,
-      'X-Timestamp' => timestamp,
-      'X-Signature' => signature
+        'X-Client' => client_name,
+        'X-Timestamp' => timestamp,
+        'X-Signature' => signature
     }
   end
 
   before do
-    allow(singer).to receive(:config).and_return(double(:config, app_name: client_name))
+    allow(singer).to receive(:client_name).and_return(client_name)
   end
   before { allow(singer).to receive(:timestamp).and_return(timestamp) }
 
   describe 'success GET authentication' do
     let(:fullpath) { '/anonymous?test=yes' }
-    it { is_expected.to be_truthy }
+    it { is_expected.to be true }
   end
 
   describe 'success POST authentication' do
     let(:request_method) { 'POST' }
     let(:body) { double(:request_body, read: '{"test":"yes"}') }
 
-    it { is_expected.to be_truthy }
+    it { is_expected.to be true }
   end
 
   describe 'success body-less authentication' do

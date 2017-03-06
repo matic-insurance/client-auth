@@ -6,7 +6,7 @@ describe ClientAuth::Client do
 
   before { set_config(api_host, app_name) }
 
-  let(:client) { described_class.new }
+  let(:client) { described_class.new(ClientAuth::Config) }
 
   let(:test_host) { "http://#{api_host}/the-path" }
   let(:path) { 'the-path' }
