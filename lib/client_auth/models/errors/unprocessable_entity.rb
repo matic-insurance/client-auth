@@ -1,6 +1,6 @@
 module ClientAuth
   module Errors
-    class ClientInitializationError < StandardError
+    class UnprocessableEntity < BaseError
     end
   end
 end

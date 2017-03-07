@@ -1,6 +1,6 @@
 module ClientAuth
   module Errors
-    class ResourceNotFound < RestClient::Exception
+    class ResourceNotFound < BaseError
     end
   end
 end

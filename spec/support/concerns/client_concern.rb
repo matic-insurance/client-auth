@@ -5,7 +5,6 @@ shared_examples_for 'raised 404' do
   end
   let(:json) { ClientAuth::ErrorSerializer.serialize(data) }
   let(:response) { {body: json, status: 404} }
-  let(:error) { ClientAuth::Errors::ResourceNotFound.new(response, 404) }
 
   it { expect { request }.to raise_error(ClientAuth::Errors::ResourceNotFound) }
 end
@@ -17,7 +16,6 @@ shared_examples_for 'raised 412' do
   end
   let(:json) { ClientAuth::ErrorSerializer.serialize(data) }
   let(:response) { {body: json, status: 412} }
-  let(:error) { ClientAuth::Errors::PreconditionFailed.new(response, 412) }
 
   it { expect { request }.to raise_error(ClientAuth::Errors::PreconditionFailed) }
 end
@@ -25,13 +23,12 @@ end
 shared_examples_for 'raised 422' do
   let(:data) do
     double(:data, status: 422,
-                  title: 'ClientAuth::Errors::UnprocessableError', detail: '')
+                  title: 'ClientAuth::Errors::UnprocessableEntity', detail: '')
   end
   let(:json) { ClientAuth::ErrorSerializer.serialize(data) }
   let(:response) { {body: json, status: 422} }
-  let(:error) { ClientAuth::Errors::UnprocessableError.new(response, 422) }
 
-  it { expect { request }.to raise_error(ClientAuth::Errors::UnprocessableError) }
+  it { expect { request }.to raise_error(ClientAuth::Errors::UnprocessableEntity) }
 end
 
 shared_examples_for 'raised 500' do

@@ -51,7 +51,6 @@ module ClientAuth
         client_name,
         @request.request_method.upcase,
         @request.fullpath,
-        @request.body.read,
         timestamp
       ].join(DELIMITER)
     end
@@ -65,7 +64,7 @@ module ClientAuth
     end
 
     def raise_error(message)
-      raise ClientAuth::Errors::PreconditionFailed.new(nil, '412', message)
+      raise ClientAuth::Errors::PreconditionFailed.new('412', message)
     end
   end
 end
