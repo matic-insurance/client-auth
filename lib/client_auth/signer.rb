@@ -1,11 +1,15 @@
 module ClientAuth
   class Signer
-    attr_reader :client_name
+    attr_reader :client_name, :payload
 
-    def initialize(method, path, params)
+    def initialize(method, path, params = {})
       @method = method.upcase
       @path = path
-      @params = params
+      @payload = params
+    end
+
+    def payload=(value)
+      @payload = value
     end
 
     def headers
@@ -50,12 +54,12 @@ module ClientAuth
 
     def request_body
       return if @method == 'GET'
-      @params.to_json
+      payload
     end
 
     def fullpath
       fullpath = [safe_path]
-      fullpath.push(@params.to_query) if @method == 'GET' && @params.present?
+      fullpath.push(payload.to_query) if @method == 'GET' && payload.present?
       fullpath.join('?')
     end
 

@@ -52,7 +52,7 @@ describe ClientAuth::Client do
 
     it 'has current body' do
       assert_requested(:post, test_host) do |request|
-        expect(request.body).to eq('{"a":"b"}')
+        expect(request.body).to eq("a=b")
       end
     end
   end
@@ -82,7 +82,7 @@ describe ClientAuth::Client do
 
     it 'has current body' do
       assert_requested(:patch, test_host) do |request|
-        expect(request.body).to eq('{"a":"b"}')
+        expect(request.body).to eq("a=b")
       end
     end
   end

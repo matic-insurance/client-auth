@@ -51,9 +51,14 @@ module ClientAuth
         client_name,
         @request.request_method.upcase,
         @request.fullpath,
-        @request.body.read,
+        request_body,
         timestamp
       ].join(DELIMITER)
+    end
+
+    def request_body
+      return @request.body.read if @request.request_method == 'GET'
+      @request.raw_post
     end
 
     def signature

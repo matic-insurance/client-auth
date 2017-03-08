@@ -5,11 +5,14 @@ describe ClientAuth::Signer do
 
   let(:rsa_key) { ClientAuth::Config.key.public_key.to_s }
   let(:auth) { ClientAuth::Authenticator.new(request, rsa_key) }
-
-  before { signer.configure(ClientAuth::Config.key, ClientAuth::Config.app_name) }
+  let(:payload) {  }
+  before {
+    signer.configure(ClientAuth::Config.key, ClientAuth::Config.app_name)
+    signer.payload = payload
+  }
 
   describe '#headers' do
-    let(:signer) { described_class.new('get', 'test_path', a: 'b') }
+    let(:signer) { described_class.new('get', 'test_path') }
 
     its(['X-Client']) { is_expected.to eq('test-app-name') }
     its(['X-Timestamp']) { is_expected.to be_a_time_close_to Time.now.to_i }
@@ -17,63 +20,67 @@ describe ClientAuth::Signer do
   end
 
   describe 'GET with params' do
-    let(:signer) { described_class.new('get', 'test_path', a: 'b') }
+    let(:signer) { described_class.new('get', 'test_path') }
     let(:request) { stub_get_request(signer, '/test_path?a=b') }
+    let(:payload) { {a: 'b'} }
 
     it { expect(auth.authenticate!).to be true }
   end
 
   describe 'GET without params' do
-    let(:signer) { described_class.new('get', 'test_path', nil) }
+    let(:signer) { described_class.new('get', 'test_path') }
     let(:request) { stub_get_request(signer, '/test_path') }
 
     it { expect(auth.authenticate!).to be true }
   end
 
   describe 'POST without body' do
-    let(:signer) { described_class.new('post', 'test_path', {}) }
-    let(:request) { stub_request(signer, {}, 'POST') }
+    let(:signer) { described_class.new('post', 'test_path') }
+    let(:request) { stub_request(signer, nil, 'POST') }
 
     it { expect(auth.authenticate!).to be true }
   end
 
   describe 'POST with body' do
-    let(:signer) { described_class.new('post', 'test_path', a: 'b') }
+    let(:signer) { described_class.new('post', 'test_path') }
     let(:request) { stub_request(signer, {a: 'b'}, 'POST') }
+    let(:payload) { {a: 'b'} }
 
     it { expect(auth.authenticate!).to be true }
   end
 
   describe 'PATCH without body' do
-    let(:signer) { described_class.new('patch', 'test_path', {}) }
-    let(:request) { stub_request(signer, {}, 'PATCH') }
+    let(:signer) { described_class.new('patch', 'test_path') }
+    let(:request) { stub_request(signer, nil, 'PATCH') }
 
     it { expect(auth.authenticate!).to be true }
   end
 
   describe 'PATCH with body' do
-    let(:signer) { described_class.new('patch', 'test_path', a: 'b') }
+    let(:signer) { described_class.new('patch', 'test_path') }
     let(:request) { stub_request(signer, {a: 'b'}, 'PATCH') }
+    let(:payload) { {a: 'b'} }
 
     it { expect(auth.authenticate!).to be true }
   end
 
   describe 'PUT without body' do
-    let(:signer) { described_class.new('put', 'test_path', {}) }
-    let(:request) { stub_request(signer, {}, 'PUT') }
+    let(:signer) { described_class.new('put', 'test_path') }
+    let(:request) { stub_request(signer, nil, 'PUT') }
 
     it { expect(auth.authenticate!).to be true }
   end
 
   describe 'PUT with body' do
-    let(:signer) { described_class.new('put', 'test_path', a: 'b') }
+    let(:signer) { described_class.new('put', 'test_path') }
     let(:request) { stub_request(signer, {a: 'b'}, 'PUT') }
+    let(:payload) { {a: 'b'} }
 
     it { expect(auth.authenticate!).to be true }
   end
 
   describe 'not implemented' do
-    let(:signer) { described_class.new('get', 'test_path', a: 'b') }
+    let(:signer) { described_class.new('get', 'test_path') }
 
     describe 'not configure name' do
       before { signer.configure(ClientAuth::Config.key, nil) }
@@ -103,6 +110,7 @@ describe ClientAuth::Signer do
     double(:request, headers: signer.headers,
                      request_method: method,
                      fullpath: '/test_path',
+                     raw_post: body,
                      body: double(:request_body, read: body && body.to_json))
   end
 end

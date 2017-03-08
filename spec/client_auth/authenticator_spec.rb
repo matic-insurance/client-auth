@@ -6,9 +6,13 @@ describe ClientAuth::Authenticator do
   let(:client_name) { 'client_name' }
   let(:fullpath) { '/anonymous' }
   let(:body) { double(:request_body, read: '') }
+  let(:raw_post) {'{:test=>"yes"}'}
   let(:timestamp) { 9.minutes.ago.to_i }
-  let(:singer) { ClientAuth::Signer.new(request_method, '/anonymous', test: 'yes') }
-  let(:secret_string) { singer.send(:secret_string) }
+  let(:singer) { ClientAuth::Signer.new(request_method, '/anonymous') }
+  let(:secret_string) do
+    singer.payload = {test: 'yes'}
+    singer.send(:secret_string)
+  end
 
   let(:rsa_key) { public_key }
   let(:signature) { make_signature(rsa_key, secret_string) }
@@ -17,7 +21,7 @@ describe ClientAuth::Authenticator do
     double(:request, headers: headers,
                      request_method: request_method,
                      fullpath: fullpath,
-                     body: body)
+                     body: body, raw_post: raw_post)
   end
 
   let(:headers) do

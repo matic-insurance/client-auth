@@ -14,13 +14,13 @@ module ClientAuth
     end
 
     def post(path, params = {})
-      resource = resource('POST', path, params)
-      with_rescue { resource[URI.escape(path)].post(params.to_json) }
+      resource = resource('POST', path)
+      with_rescue { resource[URI.escape(path)].post(params) }
     end
 
     def patch(path, params = {})
-      resource = resource('PATCH', path, params)
-      with_rescue { resource[URI.escape(path)].patch(params.to_json) }
+      resource = resource('PATCH', path)
+      with_rescue { resource[URI.escape(path)].patch(params) }
     end
 
     protected
@@ -28,17 +28,17 @@ module ClientAuth
     def with_rescue
       yield
     rescue RestClient::NotFound, RestClient::PreconditionFailed,
-           RestClient::UnprocessableEntity => exception
+        RestClient::UnprocessableEntity => exception
       raise ClientAuth::ErrorSerializer.deserialize(exception.response)
     rescue RestClient::Exception => exception
       raise ClientAuth::Errors::ClientError.new(exception.http_code, exception.message)
     end
 
-    def resource(method, path, params)
+    def resource(method, path, params = nil)
       signer = ClientAuth::Signer.new(method, path, params)
       signer.configure(key, app_name)
       headers = signer.headers.merge(content_type: :json, accept: :json)
-      RestClient::Resource.new(api_host, headers: headers)
+      ClientAuth::Resource.new(api_host, signer: signer, headers: headers)
     end
   end
 end
