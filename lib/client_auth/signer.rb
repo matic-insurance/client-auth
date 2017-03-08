@@ -1,20 +1,24 @@
 module ClientAuth
   class Signer
-    attr_reader :client_name
+    attr_reader :client_name, :payload
 
-    def initialize(method, path, params)
+    def initialize(method, path, params = {})
       @method = method.upcase
       @path = path
-      @params = params
+      @payload = params
+    end
+
+    def payload=(value)
+      @payload = value
     end
 
     def headers
       raise NotImplementedError, 'Client name not configured' unless client_name
 
       {
-          'X-Client' => client_name,
-          'X-Timestamp' => timestamp,
-          'X-Signature' => signature
+        'X-Client' => client_name,
+        'X-Timestamp' => timestamp,
+        'X-Signature' => signature
       }
     end
 
@@ -40,16 +44,22 @@ module ClientAuth
 
     def secret_string
       [
-          client_name,
-          @method,
-          fullpath,
-          timestamp
+        client_name,
+        @method,
+        fullpath,
+        request_body,
+        timestamp
       ].join(ClientAuth::Authenticator::DELIMITER)
+    end
+
+    def request_body
+      return if @method == 'GET'
+      payload
     end
 
     def fullpath
       fullpath = [safe_path]
-      fullpath.push(@params.to_query) if @method == 'GET' && @params.present?
+      fullpath.push(payload.to_query) if @method == 'GET' && payload.present?
       fullpath.join('?')
     end
 
