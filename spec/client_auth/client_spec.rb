@@ -13,8 +13,10 @@ describe ClientAuth::Client do
   let(:params) { {a: :b} }
 
   describe 'successful GET' do
-    before { stub_request(:get, test_host).with(query: params) }
-    before { client.get(path, params) }
+    before do
+      stub_request(:get, test_host).with(query: params)
+      client.get(path, params)
+    end
 
     it 'has current headers' do
       assert_requested(:get, test_host, query: params) do |request|

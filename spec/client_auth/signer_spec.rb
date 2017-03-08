@@ -77,30 +77,32 @@ describe ClientAuth::Signer do
 
     describe 'not configure name' do
       before { signer.configure(ClientAuth::Config.key, nil) }
-      it { expect {
-        signer.headers
-      }.to raise_error(NotImplementedError, 'Client name not configured') }
+      it do
+        expect do
+          signer.headers
+        end.to raise_error(NotImplementedError, 'Client name not configured') end
     end
 
     describe 'not configured key' do
       before { signer.configure(nil, ClientAuth::Config.app_name) }
-      it { expect {
-        signer.headers
-      }.to raise_error(NotImplementedError, 'Client key not configured') }
+      it do
+        expect do
+          signer.headers
+        end.to raise_error(NotImplementedError, 'Client key not configured') end
     end
   end
 
   def stub_get_request(signer, path)
     double(:request, headers: signer.headers,
-           request_method: 'GET',
-           fullpath: path,
-           body: double(:request_body, read: nil))
+                     request_method: 'GET',
+                     fullpath: path,
+                     body: double(:request_body, read: nil))
   end
 
   def stub_request(signer, body, method = 'POST')
     double(:request, headers: signer.headers,
-           request_method: method,
-           fullpath: '/test_path',
-           body: double(:request_body, read: body && body.to_json))
+                     request_method: method,
+                     fullpath: '/test_path',
+                     body: double(:request_body, read: body && body.to_json))
   end
 end

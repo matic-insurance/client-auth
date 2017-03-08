@@ -51,6 +51,7 @@ module ClientAuth
         client_name,
         @request.request_method.upcase,
         @request.fullpath,
+        @request.body.read,
         timestamp
       ].join(DELIMITER)
     end

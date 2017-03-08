@@ -15,16 +15,16 @@ describe ClientAuth::Authenticator do
 
   let(:request) do
     double(:request, headers: headers,
-           request_method: request_method,
-           fullpath: fullpath,
-           body: body)
+                     request_method: request_method,
+                     fullpath: fullpath,
+                     body: body)
   end
 
   let(:headers) do
     {
-        'X-Client' => client_name,
-        'X-Timestamp' => timestamp,
-        'X-Signature' => signature
+      'X-Client' => client_name,
+      'X-Timestamp' => timestamp,
+      'X-Signature' => signature
     }
   end
 

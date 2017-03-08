@@ -12,9 +12,9 @@ module ClientAuth
       raise NotImplementedError, 'Client name not configured' unless client_name
 
       {
-          'X-Client' => client_name,
-          'X-Timestamp' => timestamp,
-          'X-Signature' => signature
+        'X-Client' => client_name,
+        'X-Timestamp' => timestamp,
+        'X-Signature' => signature
       }
     end
 
@@ -40,11 +40,17 @@ module ClientAuth
 
     def secret_string
       [
-          client_name,
-          @method,
-          fullpath,
-          timestamp
+        client_name,
+        @method,
+        fullpath,
+        request_body,
+        timestamp
       ].join(ClientAuth::Authenticator::DELIMITER)
+    end
+
+    def request_body
+      return if @method == 'GET'
+      @params.to_json
     end
 
     def fullpath
