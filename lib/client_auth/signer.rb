@@ -8,9 +8,7 @@ module ClientAuth
       @payload = params
     end
 
-    def payload=(value)
-      @payload = value
-    end
+    attr_writer :payload
 
     def headers
       raise NotImplementedError, 'Client name not configured' unless client_name

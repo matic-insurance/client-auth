@@ -32,9 +32,14 @@ shared_examples_for 'raised 422' do
 end
 
 shared_examples_for 'raised 500' do
-  let(:response) { {status: 500} }
+  let(:data) do
+    double(:data, status: 500,
+                  title: 'ClientAuth::Errors::InternalServerError', detail: '')
+  end
+  let(:json) { ClientAuth::ErrorSerializer.serialize(data) }
+  let(:response) { {body: json, status: 500} }
 
-  it { expect { request }.to raise_error(ClientAuth::Errors::ClientError) }
+  it { expect { request }.to raise_error(ClientAuth::Errors::InternalServerError) }
 end
 
 shared_examples_for 'raised 421' do
