@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Authentication client'
   spec.description   = 'Authentication for matic clients'
-  spec.homepage      = 'https://github.com/matic-insurance/client-auth'
+  spec.homepage      = 'https://github.com/himaxwell/client-auth'
 
   spec.files = Dir['lib/**/*.rb']
   spec.files += Dir['README.markdown']
