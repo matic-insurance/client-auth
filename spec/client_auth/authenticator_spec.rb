@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe ClientAuth::Authenticator do
   subject { authenticate }
   let(:authenticate) { described_class.new(request, rsa_key).authenticate! }

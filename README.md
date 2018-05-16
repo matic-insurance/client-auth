@@ -1,6 +1,8 @@
 Client Auth
 ----------------
 
+[![CircleCI](https://circleci.com/gh/himaxwell/client-auth.svg?style=svg)](https://circleci.com/gh/himaxwell/client-auth)
+
 Client Authentication gem for Matic clients.
 
 Releasing
