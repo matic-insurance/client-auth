@@ -1,0 +1,35 @@
+name: ci
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: [ '2.5.x', '2.6.x' ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.OS }}-ruby-${{ matrix.ruby }}
+          restore-keys: ${{ runner.OS }}-
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Set up Bundler
+        run: gem install bundler:1.14.5
+      - name: Set up Dependencies
+        run: bundle install --path vendor/bundle
