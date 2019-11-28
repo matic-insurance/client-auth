@@ -20,5 +20,5 @@ Master status: ![](https://github.com/matic-insurance/client-auth/workflows/ci/b
 To integrate in you project, please add next:
 
     source 'https://matic-bot:<token>@rubygems.pkg.github.com/matic-insurance' do
-      gem 'client-auth', '0.1.6'
+      gem 'client-auth'
     end
