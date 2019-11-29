@@ -6,7 +6,7 @@ describe ClientAuth::Authenticator do
   let(:client_name) { 'client_name' }
   let(:fullpath) { '/anonymous' }
   let(:body) { double(:request_body, read: '') }
-  let(:raw_post) {'{:test=>"yes"}'}
+  let(:raw_post) { '{:test=>"yes"}' }
   let(:timestamp) { 9.minutes.ago.to_i }
   let(:singer) { ClientAuth::Signer.new(request_method, '/anonymous') }
   let(:secret_string) do
@@ -34,8 +34,8 @@ describe ClientAuth::Authenticator do
 
   before do
     allow(singer).to receive(:client_name).and_return(client_name)
+    allow(singer).to receive(:timestamp).and_return(timestamp)
   end
-  before { allow(singer).to receive(:timestamp).and_return(timestamp) }
 
   describe 'success GET authentication' do
     let(:fullpath) { '/anonymous?test=yes' }

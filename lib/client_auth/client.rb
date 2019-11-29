@@ -28,7 +28,7 @@ module ClientAuth
     def with_rescue
       yield
     rescue RestClient::NotFound, RestClient::PreconditionFailed,
-        RestClient::UnprocessableEntity => exception
+           RestClient::UnprocessableEntity, RestClient::InternalServerError => exception
       raise ClientAuth::ErrorSerializer.deserialize(exception.response)
     rescue RestClient::Exception => exception
       raise ClientAuth::Errors::ClientError.new(exception.http_code, exception.message)

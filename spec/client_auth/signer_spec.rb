@@ -1,15 +1,14 @@
 describe ClientAuth::Signer do
   subject { signer.headers }
 
-  before { set_config('test-api-host', 'test-app-name') }
-
   let(:rsa_key) { ClientAuth::Config.key.public_key.to_s }
   let(:auth) { ClientAuth::Authenticator.new(request, rsa_key) }
-  let(:payload) {  }
-  before {
+  let(:payload) {}
+  before do
+    set_config('test-api-host', 'test-app-name')
     signer.configure(ClientAuth::Config.key, ClientAuth::Config.app_name)
     signer.payload = payload
-  }
+  end
 
   describe '#headers' do
     let(:signer) { described_class.new('get', 'test_path') }
