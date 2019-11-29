@@ -1,21 +1,24 @@
-Client Auth
-----------------
+## Client Auth
 
 Client Authentication gem for Matic clients.
 
-Releasing
----------
+Master status: ![](https://github.com/matic-insurance/client-auth/workflows/ci/badge.svg?branch=master)
 
-For the version releasing we are using [Geminabox](https://github.com/tomlea/geminabox) 
-It need to be installed separately:
-- `gem install geminabox --no-rdoc --no-ri`
-- `gem inabox -c`
+## Installation
 
-To Release new version:
-- `bash bin/release <version_number>`
+- `git clone git@github.com:matic-insurance/palantir.git`
+- `gem install bundler:1.14.5`
+- `bundle install`
+
+## Releasing
+
+- Merge all PR to master
+- Create new named release `x.x.x`
+- CI will run tests and publish new gem automatically
+- Check [GitHub Actions](https://github.com/matic-insurance/client-auth/actions) for more details 
 
 To integrate in you project, please add next:
 
-    source 'http://<user_name>:<pass_creds>@gems.maticinsurance.com:9292/' do
+    source 'https://matic-bot:<token>@rubygems.pkg.github.com/matic-insurance' do
       gem 'client-auth'
     end
