@@ -6,7 +6,7 @@ Master status: ![](https://github.com/matic-insurance/client-auth/workflows/ci/b
 
 ## Installation
 
-- `git clone git@github.com:matic-insurance/palantir.git`
+- `git clone git@github.com:matic-insurance/client-auth.git`
 - `gem install bundler:1.14.5`
 - `bundle install`
 
@@ -19,6 +19,6 @@ Master status: ![](https://github.com/matic-insurance/client-auth/workflows/ci/b
 
 To integrate in you project, please add next:
 
-    source 'https://matic-bot:<token>@rubygems.pkg.github.com/matic-insurance' do
-      gem 'client-auth'
+    source "https://rubygems.pkg.github.com/matic-insurance" do
+      gem "client-auth", "1.1.0"
     end
