@@ -7,20 +7,6 @@ orbs:
 
 jobs:
 
-  build:
-    resource_class: small
-    parameters:
-      ruby-version:
-        type: string
-    docker:
-      - image: cimg/ruby:<< parameters.ruby-version >>
-    steps:
-      - checkout
-      - ruby/install-deps
-      - run:
-          name: Run Tests
-          command: bundle exec rspec
-
   release:
     parameters:
       tag:
@@ -51,17 +37,6 @@ jobs:
           command: gem push *.gem
 
 workflows:
-
-  client-auth.build-pull-request:
-    when:
-      not:
-        equal: [ master, << pipeline.git.branch >> ]
-    jobs:
-
-      - build:
-          matrix:
-            parameters:
-              ruby-version: [ '2.5', '2.6' ]
 
   client-auth.release:
     jobs:
