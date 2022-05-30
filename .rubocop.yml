@@ -3,6 +3,7 @@ require: rubocop-rspec
 AllCops:
   Exclude:
     - 'lib/client_auth.rb'
+    - 'vendor/**/*'
   TargetRubyVersion: 2.3
 
 Metrics/LineLength:
