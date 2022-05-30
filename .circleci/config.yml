@@ -7,7 +7,7 @@ orbs:
 
 jobs:
 
-  rubocop:
+  rspec-test:
     resource_class: small
     parameters:
       ruby-version:
@@ -58,7 +58,7 @@ workflows:
         equal: [ master, << pipeline.git.branch >> ]
     jobs:
 
-      - rubocop:
+      - rspec-test:
           matrix:
             parameters:
               ruby-version: [ '2.5', '2.6' ]
