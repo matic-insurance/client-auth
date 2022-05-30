@@ -17,7 +17,9 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps
-      - ruby/rspec-test
+      - run:
+          name: Run Rspec
+          command: bundle exec rspec
 
   release:
     parameters:
